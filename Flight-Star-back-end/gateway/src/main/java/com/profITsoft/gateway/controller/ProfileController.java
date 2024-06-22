@@ -18,22 +18,22 @@ import reactor.core.publisher.Mono;
 @RequiredArgsConstructor
 public class ProfileController {
 
-    private final SessionService sessionService;
+  private final SessionService sessionService;
 
-    @GetMapping("/profile")
-    public Mono<UserInfo> profile(ServerWebExchange exchange) {
-        return sessionService.checkSession(exchange)
-                .flatMap(this::toUserInfo)
-                .onErrorResume(UnauthorizedException.class, e -> {
-                    throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized access");
-                });
-    }
+  @GetMapping("/profile")
+  public Mono<UserInfo> profile(ServerWebExchange exchange) {
+    return sessionService.checkSession(exchange)
+        .flatMap(this::toUserInfo)
+        .onErrorResume(UnauthorizedException.class, e -> {
+          throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized access");
+        });
+  }
 
-    private Mono<UserInfo> toUserInfo(UserSession session) {
-        return Mono.just(UserInfo.builder()
-                .email(session.getEmail())
-                .name(session.getName())
-                .build());
-    }
+  private Mono<UserInfo> toUserInfo(UserSession session) {
+    return Mono.just(UserInfo.builder()
+        .email(session.getEmail())
+        .name(session.getName())
+        .build());
+  }
 
 }

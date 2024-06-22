@@ -1,29 +1,25 @@
 package com.profITsoft.gateway.data;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.redis.core.RedisHash;
 
 import java.time.Instant;
 
 @Getter
 @Setter
-@RedisHash("UserSession")
-@JsonIgnoreProperties(ignoreUnknown = true)
+@Entity
 public class UserSession {
 
-    @Id
-    private String id;
-    private String email;
-    private String name;
+  @Id
+  private String id;
+  private String email;
+  private String name;
+  private Instant expiresAt;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "UTC")
-    private Instant expiresAt;
+  public boolean isExpired() {
+    return expiresAt.isBefore(Instant.now());
+  }
 
-    public boolean isExpired() {
-        return expiresAt.isBefore(Instant.now());
-    }
 }

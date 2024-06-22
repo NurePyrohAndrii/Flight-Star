@@ -10,18 +10,18 @@ import lombok.extern.jackson.Jacksonized;
 @Jacksonized
 public class GoogleOauthTokenRequest {
 
-    private String code;
+  private String code;
 
-    @JsonProperty("client_id")
-    private String clientId;
+  @JsonProperty("client_id")
+  private String clientId;
 
-    @JsonProperty("client_secret")
-    private String clientSecret;
+  @JsonProperty("client_secret")
+  private String clientSecret;
 
-    @JsonProperty("grant_type")
-    private String grantType;
+  @JsonProperty("grant_type")
+  private String grantType;
 
-    @JsonProperty("redirect_uri")
-    private String redirectUri;
+  @JsonProperty("redirect_uri")
+  private String redirectUri;
 
 }

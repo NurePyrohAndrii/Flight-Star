@@ -10,18 +10,18 @@ import lombok.extern.jackson.Jacksonized;
 @Jacksonized
 public class GoogleOauthTokenResponse {
 
-    @JsonProperty("access_token")
-    private String accessToken;
+  @JsonProperty("access_token")
+  private String accessToken;
 
-    @JsonProperty("expires_in")
-    private int expiresIn;
+  @JsonProperty("expires_in")
+  private int expiresIn;
 
-    private String scope;
-    @JsonProperty("token_type")
+  private String scope;
+  @JsonProperty("token_type")
 
-    private String tokenType;
+  private String tokenType;
 
-    @JsonProperty("id_token")
-    private String idToken;
+  @JsonProperty("id_token")
+  private String idToken;
 
 }

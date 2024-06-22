@@ -11,7 +11,7 @@ import lombok.extern.jackson.Jacksonized;
 @ToString
 public class UserInfo {
 
-    private String email;
-    private String name;
+  private String email;
+  private String name;
 
 }

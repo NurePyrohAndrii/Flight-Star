@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="0812a827-fac6-4da0-a4d0-52f055d9f5cd" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/flight-status-service/package-lock.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gateway/src/main/java/com/profITsoft/gateway/filter/AuthenticationFilter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gateway/src/main/resources/application.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/email-service/.env" beforeDir="false" afterPath="$PROJECT_DIR$/email-service/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gateway/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/gateway/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gateway/src/main/java/com/profITsoft/gateway/auth/GoogleAuthenticationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/gateway/src/main/java/com/profITsoft/gateway/auth/GoogleAuthenticationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gateway/src/main/java/com/profITsoft/gateway/auth/dto/GoogleOauthTokenRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/gateway/src/main/java/com/profITsoft/gateway/auth/dto/GoogleOauthTokenRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gateway/src/main/java/com/profITsoft/gateway/auth/dto/GoogleOauthTokenResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/gateway/src/main/java/com/profITsoft/gateway/auth/dto/GoogleOauthTokenResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gateway/src/main/java/com/profITsoft/gateway/auth/dto/UserInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/gateway/src/main/java/com/profITsoft/gateway/auth/dto/UserInfo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gateway/src/main/java/com/profITsoft/gateway/config/RedisConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gateway/src/main/java/com/profITsoft/gateway/config/WebConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/gateway/src/main/java/com/profITsoft/gateway/config/WebConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gateway/src/main/java/com/profITsoft/gateway/controller/AuthenticationController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gateway/src/main/java/com/profITsoft/gateway/controller/ProfileController.java" beforeDir="false" afterPath="$PROJECT_DIR$/gateway/src/main/java/com/profITsoft/gateway/controller/ProfileController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gateway/src/main/java/com/profITsoft/gateway/data/UserSession.java" beforeDir="false" afterPath="$PROJECT_DIR$/gateway/src/main/java/com/profITsoft/gateway/data/UserSession.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gateway/src/main/java/com/profITsoft/gateway/filter/AuthorizationFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/gateway/src/main/java/com/profITsoft/gateway/filter/AuthorizationFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gateway/src/main/java/com/profITsoft/gateway/repository/UserSessionRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/gateway/src/main/java/com/profITsoft/gateway/repository/UserSessionRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gateway/src/main/java/com/profITsoft/gateway/service/SessionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/gateway/src/main/java/com/profITsoft/gateway/service/SessionService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gateway/src/main/java/com/profITsoft/gateway/service/UnauthorizedException.java" beforeDir="false" afterPath="$PROJECT_DIR$/gateway/src/main/java/com/profITsoft/gateway/service/UnauthorizedException.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;NurePyrohAndrii&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/NurePyrohAndrii/Flight-Star.git&quot;,
+    &quot;accountId&quot;: &quot;59b2cf0b-651e-4410-a7d3-108c1db37a7f&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
+  <component name="ProjectId" id="2iF8mwgBlaAF2DVHl3c6jsH1p0s" />
+  <component name="ProjectViewState">
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "dev",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Projects/Flight Star/Flight-Star/Flight-Star-back-end",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Projects\Flight Star\Flight-Star\Flight-Star-back-end\flight-status-service" />
+      <recent name="C:\Projects\Flight Star\Flight-Star\Flight-Star-back-end\gateway\src\main\resources" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="Flight-Star-back-end" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="Flight-Star-back-end" />
+      <option name="filePath" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.17890.1" />
+        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-IU-241.17890.1" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="0812a827-fac6-4da0-a4d0-52f055d9f5cd" name="Changes" comment="" />
+      <created>1719075128924</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1719075128924</updated>
+      <workItem from="1719075133322" duration="25000" />
+      <workItem from="1719075169053" duration="160000" />
+      <workItem from="1719075337629" duration="1164000" />
+      <workItem from="1719076542956" duration="4532000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

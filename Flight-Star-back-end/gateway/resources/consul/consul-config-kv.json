@@ -1,0 +1,52 @@
+[
+	{
+		"key": "config/",
+		"flags": 0,
+		"value": ""
+	},
+	{
+		"key": "config/service-flight-status/",
+		"flags": 0,
+		"value": ""
+	},
+	{
+		"key": "config/service-flight-status/dev/",
+		"flags": 0,
+		"value": ""
+	},
+	{
+		"key": "config/service-flight-status/dev/address",
+		"flags": 0,
+		"value": "bG9jYWxob3N0"
+	},
+	{
+		"key": "config/service-flight-status/dev/mongo.address",
+		"flags": 0,
+		"value": "bW9uZ29kYjovLzEyNy4wLjAuMToyNzAxOA=="
+	},
+	{
+		"key": "config/service-flight-status/dev/port",
+		"flags": 0,
+		"value": "ODg4OA=="
+	},
+	{
+		"key": "config/service-flight-status/prod/",
+		"flags": 0,
+		"value": ""
+	},
+	{
+		"key": "config/service-flight-status/prod/address",
+		"flags": 0,
+		"value": "c2VydmljZS1mbGlnaHQtc3RhdHVz"
+	},
+	{
+		"key": "config/service-flight-status/prod/mongo.address",
+		"flags": 0,
+		"value": "bW9uZ29kYjovL2ZsaWdodC5zdGF0dXMuZGI6MjcwMTc="
+	},
+	{
+		"key": "config/service-flight-status/prod/port",
+		"flags": 0,
+		"value": "ODg4OA=="
+	}
+]

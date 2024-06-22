@@ -1,0 +1,75 @@
+spring:
+  application:
+    name: service-flight-system
+
+  datasource:
+    url: jdbc:postgresql://localhost:15432/flight-system
+    username: system_user
+    password: password
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+  liquibase:
+    enabled: true
+    drop-first: false
+    change-log: classpath:db/changelog/db.changelog-master.yaml
+    default-schema: public
+
+  kafka:
+    producer:
+      properties:
+        spring:
+          json:
+            type:
+              mapping: SendMailMessage:com.profITsoft.flightsystem.messaging.SendMailMessage
+      client-id: ${spring.application.name}
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+
+  config:
+    import: optional:consul:/
+
+  cloud:
+    consul:
+      host: consul
+      port: 8500
+      discovery:
+        health-check-path: /health
+        service-name: ${spring.application.name}
+
+
+kafka:
+  topic:
+    mail: mail
+
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      base-path: /
+      exposure:
+        include: "*"
+
+# CORS configuration
+cors:
+  allowed-origins: "*"
+  allowed-methods: "*"
+  allowed-headers: "*"
+  exposed-headers: "*"
+
+logging:
+  level:
+    org:
+      springframework:
+        dao: DEBUG
+

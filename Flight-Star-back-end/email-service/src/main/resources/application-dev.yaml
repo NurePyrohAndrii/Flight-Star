@@ -1,0 +1,6 @@
+spring:
+    kafka:
+        bootstrap-servers: localhost:29092
+
+elasticsearch:
+    address: localhost:9200

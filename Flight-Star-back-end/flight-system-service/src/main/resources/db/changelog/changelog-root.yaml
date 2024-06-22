@@ -1,0 +1,609 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: ikew
+      changes:
+        - createTable:
+            tableName: airport
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: airport_code
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: name
+                  type: varchar(255)
+              - column:
+                  name: city
+                  type: varchar(255)
+              - column:
+                  name: country
+                  type: varchar(255)
+              - column:
+                  name: timezone
+                  type: varchar(255)
+
+  - changeSet:
+      id: 2
+      author: ikew
+      changes:
+        - createTable:
+            tableName: flight
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: flight_number
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: departure_airport
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: arrival_airport
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: departure_time
+                  type: timestamp
+                  constraints:
+                    nullable: false
+              - column:
+                  name: arrival_time
+                  type: timestamp
+                  constraints:
+                    nullable: false
+        - addUniqueConstraint:
+            tableName: flight
+            columnNames: flight_number, departure_airport, arrival_airport, departure_time, arrival_time
+            constraintName: unique_flight_schedule
+        - addForeignKeyConstraint:
+            baseTableName: flight
+            baseColumnNames: departure_airport
+            constraintName: fk_flight_departure_airport
+            referencedTableName: airport
+            referencedColumnNames: id
+        - addForeignKeyConstraint:
+            baseTableName: flight
+            baseColumnNames: arrival_airport
+            constraintName: fk_flight_destination_airport
+            referencedTableName: airport
+            referencedColumnNames: id
+
+  - changeSet:
+      id: 3
+      author: ikew
+      changes:
+        - createTable:
+            tableName: service
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: description
+                  type: varchar(255)
+
+  - changeSet:
+      id: 4
+      author: ikew
+      changes:
+        - createTable:
+            tableName: flight_service
+            columns:
+              - column:
+                  name: flight_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: service_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+        - addForeignKeyConstraint:
+            baseTableName: flight_service
+            baseColumnNames: flight_id
+            constraintName: fk_flight_service_flight
+            referencedTableName: flight
+            referencedColumnNames: id
+        - addForeignKeyConstraint:
+            baseTableName: flight_service
+            baseColumnNames: service_id
+            constraintName: fk_flight_service_service
+            referencedTableName: service
+            referencedColumnNames: id
+        - createIndex:
+            tableName: flight_service
+            columns:
+              - column:
+                  name: service_id
+            indexName: idx_service_id
+
+  - changeSet:
+      id: 5
+      author: ikew
+      changes:
+        - insert:
+            tableName: airport
+            columns:
+              - column:
+                  name: airport_code
+                  value: "JFK"
+              - column:
+                  name: name
+                  value: "John F. Kennedy International Airport"
+              - column:
+                  name: city
+                  value: "New York"
+              - column:
+                  name: country
+                  value: "USA"
+              - column:
+                  name: timezone
+                  value: "America/New_York"
+        - insert:
+            tableName: airport
+            columns:
+              - column:
+                  name: airport_code
+                  value: "LAX"
+              - column:
+                  name: name
+                  value: "Los Angeles International Airport"
+              - column:
+                  name: city
+                  value: "Los Angeles"
+              - column:
+                  name: country
+                  value: "USA"
+              - column:
+                  name: timezone
+                  value: "America/Los_Angeles"
+        - insert:
+            tableName: airport
+            columns:
+              - column:
+                  name: airport_code
+                  value: "ORD"
+              - column:
+                  name: name
+                  value: "O'Hare International Airport"
+              - column:
+                  name: city
+                  value: "Chicago"
+              - column:
+                  name: country
+                  value: "USA"
+              - column:
+                  name: timezone
+                  value: "America/Chicago"
+        - insert:
+            tableName: airport
+            columns:
+              - column:
+                  name: airport_code
+                  value: "DFW"
+              - column:
+                  name: name
+                  value: "Dallas/Fort Worth International Airport"
+              - column:
+                  name: city
+                  value: "Dallas-Fort Worth"
+              - column:
+                  name: country
+                  value: "USA"
+              - column:
+                  name: timezone
+                  value: "America/Chicago"
+        - insert:
+            tableName: airport
+            columns:
+              - column:
+                  name: airport_code
+                  value: "DEN"
+              - column:
+                  name: name
+                  value: "Denver International Airport"
+              - column:
+                  name: city
+                  value: "Denver"
+              - column:
+                  name: country
+                  value: "USA"
+              - column:
+                  name: timezone
+                  value: "America/Denver"
+        - insert:
+            tableName: airport
+            columns:
+              - column:
+                  name: airport_code
+                  value: "ATL"
+              - column:
+                  name: name
+                  value: "Hartsfield-Jackson Atlanta International Airport"
+              - column:
+                  name: city
+                  value: "Atlanta"
+              - column:
+                  name: country
+                  value: "USA"
+              - column:
+                  name: timezone
+                  value: "America/New_York"
+        - insert:
+            tableName: airport
+            columns:
+              - column:
+                  name: airport_code
+                  value: "CDG"
+              - column:
+                  name: name
+                  value: "Charles de Gaulle Airport"
+              - column:
+                  name: city
+                  value: "Paris"
+              - column:
+                  name: country
+                  value: "France"
+              - column:
+                  name: timezone
+                  value: "Europe/Paris"
+        - insert:
+            tableName: airport
+            columns:
+              - column:
+                  name: airport_code
+                  value: "HND"
+              - column:
+                  name: name
+                  value: "Tokyo Haneda Airport"
+              - column:
+                  name: city
+                  value: "Tokyo"
+              - column:
+                  name: country
+                  value: "Japan"
+              - column:
+                  name: timezone
+                  value: "Asia/Tokyo"
+        - insert:
+            tableName: airport
+            columns:
+              - column:
+                  name: airport_code
+                  value: "LHR"
+              - column:
+                  name: name
+                  value: "London Heathrow Airport"
+              - column:
+                  name: city
+                  value: "London"
+              - column:
+                  name: country
+                  value: "United Kingdom"
+              - column:
+                  name: timezone
+                  value: "Europe/London"
+        - insert:
+            tableName: airport
+            columns:
+              - column:
+                  name: airport_code
+                  value: "FRA"
+              - column:
+                  name: name
+                  value: "Frankfurt Airport"
+              - column:
+                  name: city
+                  value: "Frankfurt"
+              - column:
+                  name: country
+                  value: "Germany"
+              - column:
+                  name: timezone
+                  value: "Europe/Berlin"
+        - insert:
+            tableName: airport
+            columns:
+              - column:
+                  name: airport_code
+                  value: "AMS"
+              - column:
+                  name: name
+                  value: "Amsterdam Schiphol Airport"
+              - column:
+                  name: city
+                  value: "Amsterdam"
+              - column:
+                  name: country
+                  value: "Netherlands"
+              - column:
+                  name: timezone
+                  value: "Europe/Amsterdam"
+        - insert:
+            tableName: airport
+            columns:
+              - column:
+                  name: airport_code
+                  value: "DXB"
+              - column:
+                  name: name
+                  value: "Dubai International Airport"
+              - column:
+                  name: city
+                  value: "Dubai"
+              - column:
+                  name: country
+                  value: "UAE"
+              - column:
+                  name: timezone
+                  value: "Asia/Dubai"
+        - insert:
+            tableName: airport
+            columns:
+              - column:
+                  name: airport_code
+                  value: "SIN"
+              - column:
+                  name: name
+                  value: "Singapore Changi Airport"
+              - column:
+                  name: city
+                  value: "Singapore"
+              - column:
+                  name: country
+                  value: "Singapore"
+              - column:
+                  name: timezone
+                  value: "Asia/Singapore"
+        - insert:
+            tableName: airport
+            columns:
+              - column:
+                  name: airport_code
+                  value: "HKG"
+              - column:
+                  name: name
+                  value: "Hong Kong International Airport"
+              - column:
+                  name: city
+                  value: "Hong Kong"
+              - column:
+                  name: country
+                  value: "Hong Kong"
+              - column:
+                  name: timezone
+                  value: "Asia/Hong_Kong"
+        - insert:
+            tableName: airport
+            columns:
+              - column:
+                  name: airport_code
+                  value: "MAD"
+              - column:
+                  name: name
+                  value: "Adolfo Suárez Madrid–Barajas Airport"
+              - column:
+                  name: city
+                  value: "Madrid"
+              - column:
+                  name: country
+                  value: "Spain"
+              - column:
+                  name: timezone
+                  value: "Europe/Madrid"
+        - insert:
+            tableName: airport
+            columns:
+              - column:
+                  name: airport_code
+                  value: "BCN"
+              - column:
+                  name: name
+                  value: "Josep Tarradellas Barcelona-El Prat Airport"
+              - column:
+                  name: city
+                  value: "Barcelona"
+              - column:
+                  name: country
+                  value: "Spain"
+              - column:
+                  name: timezone
+                  value: "Europe/Madrid"
+        - insert:
+            tableName: airport
+            columns:
+              - column:
+                  name: airport_code
+                  value: "PVG"
+              - column:
+                  name: name
+                  value: "Shanghai Pudong International Airport"
+              - column:
+                  name: city
+                  value: "Shanghai"
+              - column:
+                  name: country
+                  value: "China"
+              - column:
+                  name: timezone
+                  value: "Asia/Shanghai"
+        - insert:
+            tableName: airport
+            columns:
+              - column:
+                  name: airport_code
+                  value: "GRU"
+              - column:
+                  name: name
+                  value: "São Paulo/Guarulhos–Governador André Franco Montoro International Airport"
+              - column:
+                  name: city
+                  value: "São Paulo"
+              - column:
+                  name: country
+                  value: "Brazil"
+              - column:
+                  name: timezone
+                  value: "America/Sao_Paulo"
+        - insert:
+            tableName: airport
+            columns:
+              - column:
+                  name: airport_code
+                  value: "YYZ"
+              - column:
+                  name: name
+                  value: "Toronto Pearson International Airport"
+              - column:
+                  name: city
+                  value: "Toronto"
+              - column:
+                  name: country
+                  value: "Canada"
+              - column:
+                  name: timezone
+                  value: "America/Toronto"
+        - insert:
+            tableName: airport
+            columns:
+              - column:
+                  name: airport_code
+                  value: "MEX"
+              - column:
+                  name: name
+                  value: "Mexico City International Airport"
+              - column:
+                  name: city
+                  value: "Mexico City"
+              - column:
+                  name: country
+                  value: "Mexico"
+              - column:
+                  name: timezone
+                  value: "America/Mexico_City"
+
+  - changeSet:
+      id: 6
+      author: ikew
+      changes:
+        - insert:
+            tableName: service
+            columns:
+              - column:
+                  name: name
+                  value: "Business Class"
+              - column:
+                  name: description
+                  value: "Offers premium comfort with extra space and luxury amenities."
+        - insert:
+            tableName: service
+            columns:
+              - column:
+                  name: name
+                  value: "Economy Class"
+              - column:
+                  name: description
+                  value: "Provides basic accommodations and services at an economical price."
+        - insert:
+            tableName: service
+            columns:
+              - column:
+                  name: name
+                  value: "Premium Economy"
+              - column:
+                  name: description
+                  value: "Combines affordability with enhanced comfort features."
+        - insert:
+            tableName: service
+            columns:
+              - column:
+                  name: name
+                  value: "First Class"
+              - column:
+                  name: description
+                  value: "Offers the finest amenities, maximum space, and premium seating."
+        - insert:
+            tableName: service
+            columns:
+              - column:
+                  name: name
+                  value: "Wi-Fi"
+              - column:
+                  name: description
+                  value: "Provides passengers with high-speed wireless Internet access."
+        - insert:
+            tableName: service
+            columns:
+              - column:
+                  name: name
+                  value: "Entertainment"
+              - column:
+                  name: description
+                  value: "Features a range of entertainment options including movies, TV shows, and games."
+        - insert:
+            tableName: service
+            columns:
+              - column:
+                  name: name
+                  value: "Meals"
+              - column:
+                  name: description
+                  value: "Includes a variety of meal options catering to different dietary preferences."
+        - insert:
+            tableName: service
+            columns:
+              - column:
+                  name: name
+                  value: "Extra Legroom"
+              - column:
+                  name: description
+                  value: "Provides additional space for leg stretch, enhancing passenger comfort."
+        - insert:
+            tableName: service
+            columns:
+              - column:
+                  name: name
+                  value: "Priority Boarding"
+              - column:
+                  name: description
+                  value: "Allows passengers to board the plane earlier than the standard boarding process."
+        - insert:
+            tableName: service
+            columns:
+              - column:
+                  name: name
+                  value: "In-flight Shopping"
+              - column:
+                  name: description
+                  value: "Offers an exclusive selection of products available for purchase during the flight."

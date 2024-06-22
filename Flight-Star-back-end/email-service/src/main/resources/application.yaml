@@ -1,0 +1,45 @@
+spring:
+  application:
+    name: service-email-sender
+
+  config:
+    import: optional:consul:/
+
+  cloud:
+    consul:
+      host: consul
+      port: 8500
+      discovery:
+        health-check-path: /health
+        service-name: ${spring.application.name}
+
+  kafka:
+    consumer:
+      group-id: service-flight-system
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring:
+          json:
+            type:
+              mapping: SendMailMessage:com.profITsoft.emailservice.messaging.SendMailMessage
+            trusted:
+              packages: '*'
+
+kafka:
+  topic:
+    mail: mail
+
+#mail:
+#  retrying:
+#    cron: 0/30 * * * * ?
+
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      base-path: /
+      exposure:
+        include: "*"

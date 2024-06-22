@@ -1,0 +1,207 @@
+version: '3.9'
+
+name: flight-star
+
+services:
+
+  gateway:
+    image: gateway:0.0.1
+    container_name: gateway
+    build:
+      context: ./gateway
+      dockerfile: Dockerfile
+    ports:
+      - '8080:8080'
+    depends_on:
+      consul:
+        condition: service_healthy
+      gateway.db:
+        condition: service_healthy
+    environment:
+      - SERVER_PORT=8080
+      - SPRING_DATA_REDIS_HOST=gateway.db
+      - SPRING_DATA_REDIS_PORT=6379
+
+  gateway.db:
+    image: redis:6.2.6
+    container_name: db-gateway
+    ports:
+      - '6379:6379'
+    volumes:
+      - gateway_db_data:/data
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  flight.system:
+    image: flightsystem:0.0.1
+    container_name: service-flight-system
+    build:
+      context: ./flight-system-service
+      dockerfile: Dockerfile
+    depends_on:
+      flight.status.db:
+        condition: service_healthy
+    environment:
+      - SERVER_PORT= 8181
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://flight.system.db/flight-system
+      - SPRING_KAFKA_BOOTSTRAP_SERVERS=kafka:9092
+
+  flight.system.db:
+    image: postgres:16.2
+    container_name: db-flight-system
+    environment:
+      POSTGRES_USER: system_user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: flight-system
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready", "-d", "flight-system", "-U", "system_user" ]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+    ports:
+      - "15432:5432"
+    volumes:
+      - flight_system_db_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  flight.system.admin:
+    image: dpage/pgadmin4:7
+    container_name: admin-flight-system
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: root
+    ports:
+      - "5050:80"
+    volumes:
+      - flight_system_admin_data:/var/lib/pgadmin
+
+  flight.status.service:
+    container_name: service-flight-status
+    build: ./flight-status-service
+    depends_on:
+      flight.status.db:
+        condition: service_healthy
+      consul:
+        condition: service_healthy
+    environment:
+      - NODE_ENV=prod
+
+  flight.status.db:
+    container_name: db-flight-status
+    image: mongo:5.0.14
+    ports:
+      - '27018:27017'
+    volumes:
+      - flight_status_db_data:/data/db
+    healthcheck:
+      test: [ "CMD-SHELL", "mongo --eval 'db.adminCommand(\"ping\")'" ]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+
+  consul:
+    container_name: consul
+    image: consul:1.15.2
+    ports:
+      - '8501:8500'
+    volumes:
+      - consul_data:/consul/data
+      - consul_config:/consul/config
+      - ./gateway/resources/consul:/resources/consul
+    command:
+      - sh
+      - -c
+      - |
+        consul agent -server -ui -bind 0.0.0.0 -client 0.0.0.0 -data-dir /consul/data -config-dir /consul/config -bootstrap -datacenter docker &
+        consul_pid=$!
+        sleep 5
+        consul kv import @/resources/consul/consul-config-kv.json
+        wait $consul_pid
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8500/v1/status/leader"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  email.service:
+    image: email-service:0.0.1
+    container_name: service-email-sender
+    build:
+      context: ./email-service
+      dockerfile: Dockerfile
+    depends_on:
+      email.service.db:
+        condition: service_healthy
+    volumes:
+      - ./email-service/.env:/app/.env
+    environment:
+      - SERVER_PORT= 8182
+      - ELASTICSEARCH_ADDRESS=email.service.db:9200
+      - SPRING_KAFKA_BOOTSTRAP_SERVERS=kafka:9092
+
+  email.service.db:
+    image: elasticsearch:8.6.1
+    container_name: db-email-service
+    environment:
+      - discovery.type=single-node
+      - ES_JAVA_OPTS=-Xms1g -Xmx1g
+      - xpack.security.enabled=false
+    volumes:
+      - email_service_db_data:/usr/share/elasticsearch/data
+    ports:
+      - "9200:9200"
+    healthcheck:
+      test: [ "CMD-SHELL", "curl -f http://localhost:9200/_cluster/health || exit 1" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  kibana:
+    image: kibana:8.6.1
+    container_name: kibana
+    ports:
+      - "5601:5601"
+    depends_on:
+      - email.service.db
+
+  zookeeper:
+    image: 'bitnami/zookeeper:latest'
+    container_name: zookeeper
+    ports:
+      - '2181:2181'
+    environment:
+      - ALLOW_ANONYMOUS_LOGIN=yes
+
+  kafka:
+    image: 'bitnami/kafka:latest'
+    container_name: kafka
+    ports:
+      - '9092:9092'
+      - '29092:29092'
+    environment:
+      - KAFKA_BROKER_ID=1
+      - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      - KAFKA_CFG_LISTENERS=PLAINTEXT://:9092,PLAINTEXT_HOST://:29092
+      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29092
+      - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper:2181
+      - ALLOW_PLAINTEXT_LISTENER=yes
+    depends_on:
+      - zookeeper
+    restart: unless-stopped
+
+volumes:
+  gateway_db_data:
+  flight_system_db_data:
+  flight_system_admin_data:
+  flight_status_db_data:
+  consul_data:
+  consul_config:
+  email_service_db_data:
+
+networks:
+  default:
+    name: flights-system-network

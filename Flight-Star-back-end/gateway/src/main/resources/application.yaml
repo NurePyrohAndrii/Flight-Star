@@ -1,0 +1,72 @@
+server:
+  port: 8080
+  error:
+    include-message: always
+    include-binding-errors: always
+  ssl:
+    enabled: true
+    key-store: classpath:httpsKey.p12
+    key-store-type: PKCS12
+    key-store-password: winner2004
+    key-alias: gateway
+
+oauth:
+  google:
+
+spring:
+
+  application:
+    name: gateway
+
+  config:
+    import: optional:consul:/
+
+  cloud:
+    consul:
+      host: consul
+      port: 8500
+      discovery:
+        health-check-path: /health
+        health-check-interval: 10s
+        health-check-tls-skip-verify: true
+        service-name: gateway
+        scheme: https
+
+    gateway:
+      routes:
+        - id: gateway-oauth-route
+          uri: lb://gateway
+          predicates:
+            - Path=/oauth/**
+
+        - id: service-flight-status-route
+          uri: lb://service-flight-status
+          predicates:
+            - Path=/api/flight-statuses/**
+
+        - id: service-flight-system-route
+          uri: lb://service-flight-system
+          predicates:
+            - Path=/api/**
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      services:
+        wait-duration-in-open-state: 10s
+        failure-rate-threshold: 60
+        slow-call-duration-threshold:
+          - 2s
+        minimum-number-of-calls: 3
+        permitted-number-of-calls-in-half-open-state: 1
+
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      base-path: /
+      exposure:
+        include: "*"
+
